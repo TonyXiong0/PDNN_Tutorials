@@ -13,11 +13,7 @@ Contact: zhihao.xiong@sjtu.edu.cn
 Setup:
 1. Setup environment with conda: conda create -n pytorch python=3.10
 
-2. Install numpy, scipy, matplotlib: pip install numpy scipy matplotlib
-
-3. Install pytorch and its dependencies: conda install pytorch; conda install pytorch-cpu torchvision-cpu -c pytorch
-
-7. Install pyevtk for view in Paraview: pip install pyevtk
+2. All the required libraries are in importlib.py
 
 8. Setup PYTHONPATH environment by doing either a.(temporary use) or b.(permanent use): 
 
