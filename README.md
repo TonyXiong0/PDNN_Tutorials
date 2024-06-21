@@ -21,6 +21,6 @@ The following topics are provided in this library for the Jupyter Notebook:
 
 1. Approximating a simple function using neural networks
 2. Obtaining the derivative of a function using an automatic differentiation algorithm
-3. Solving the 1DPoisson equation using a PDNN
-4. Solving uniaxial tension of a 2D Plate using Energy Based PDNN.
+3. Solving the 1D Poisson equation using a PDNN
+4. Solving uniaxial tension of a 2D plate using Energy Based PDNN.
 5. Solve uniaxial tension of a 2D plate using PDE Based PDNN.
