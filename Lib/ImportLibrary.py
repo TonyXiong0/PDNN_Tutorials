@@ -6,7 +6,7 @@ from matplotlib import cm
 from matplotlib import pyplot as plt
 import matplotlib as mpl
 import time
-from mpl_toolkits.mplot3d import Axes3D
+# from mpl_toolkits.mplot3d import Axes3D
 from pyevtk.hl import gridToVTK
 import gc
 import os
@@ -28,10 +28,9 @@ if torch.cuda.is_available():
     # torch.set_default_dtype(torch.float)
     # torch.set_default_device(dev)
     torch.set_default_tensor_type('torch.cuda.FloatTensor')
-if torch.backends.mps.is_available():
-    print("MPS is available, running on MPS")
-    dev = torch.device("mps")
-
+# if torch.backends.mps.is_available():
+#     print("MPS is available, running on MPS")
+#     dev = torch.device("mps")
 else:
     print("CUDA not available, running on CPU")
 mpl.rcParams['figure.dpi'] = 350
