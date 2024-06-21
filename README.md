@@ -5,6 +5,7 @@ Physics-driven neural networks for nonlinear micromechanics
 Authors: Zhihao Xiong, Ping Yang, Pengyang Zhao
 
 International Journal of Mechanical Sciences
+
 https://doi.org/10.1016/j.ijmecsci.2024.109214
 
 Contact: zhihao.xiong@sjtu.edu.cn

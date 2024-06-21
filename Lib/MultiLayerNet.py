@@ -1,6 +1,6 @@
 import torch
 
-from ImportLibrary import *
+from Lib.ImportLibrary import *
 
 
 class MultiLayerNet(torch.nn.Module):
