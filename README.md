@@ -14,18 +14,13 @@ Contact: zhihao.xiong@sjtu.edu.cn
 Setup:
 1. Setup environment with conda: conda create -n pytorch python=3.10
 
-2. All the required libraries are in importlib.py
+2. All the required libraries are in Lib/ImportLibrary.py
 
-8. Setup PYTHONPATH environment by doing either a.(temporary use) or b.(permanent use): 
+--------------------------------------------------------------------
+The following topics are provided in this library for the Jupyter Notebook:
 
-a. export PYTHONPATH="$PYTHONPATH:\<workingdir\>/DeepEnergyMethod"
-  
-b. add the above line to the end of file ~/.bashrc and execute "source ~/.bashrc"
-
-Optional:
-
-To use fem to compare the results with fem, we recommend to install fenics
-
-1. conda config --add channels conda-forge
-
-2. !conda install fenics
+1. Approximating a simple function using neural networks
+2. Obtaining the derivative of a function using an automatic differentiation algorithm
+3. Solving the 1DPoisson equation using a PDNN
+4. Solving uniaxial tension of a 2D Plate using Energy Based PDNN.
+5. Solve uniaxial tension of a 2D plate using PDE Based PDNN.
