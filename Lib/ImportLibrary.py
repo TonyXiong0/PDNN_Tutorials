@@ -25,12 +25,13 @@ dev = torch.device('cpu')
 if torch.cuda.is_available():
     print("CUDA is available, running on GPU")
     dev = torch.device('cuda')
-    # torch.set_default_dtype(torch.float32)
+    # torch.set_default_dtype(torch.float)
     # torch.set_default_device(dev)
     torch.set_default_tensor_type('torch.cuda.FloatTensor')
-# # if torch.backends.mps.is_available():
-# #     print("MPS is available, running on MPS")
-# #     dev = torch.device("mps")5
+if torch.backends.mps.is_available():
+    print("MPS is available, running on MPS")
+    dev = torch.device("mps")
+
 else:
     print("CUDA not available, running on CPU")
 mpl.rcParams['figure.dpi'] = 350
