@@ -16,7 +16,7 @@ import shutil
 from pyDOE import lhs
 import math
 # import imageio
-from scipy.spatial import KDTree
+# from scipy.spatial import KDTree
 import random
 # from torch.utils.data import Dataset, DataLoader
 # import pandas as pd

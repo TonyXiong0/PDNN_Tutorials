@@ -16,6 +16,8 @@ Setup:
 
 2. All the required libraries are in Lib/ImportLibrary.py
 
+3. Visualising the output with paraview
+
 --------------------------------------------------------------------
 The following topics are provided in this library for the Jupyter Notebook:
 
