@@ -16,7 +16,8 @@ import shutil
 from pyDOE import lhs
 import math
 # import imageio
-# from scipy.spatial import KDTree
+from scipy.spatial import KDTree
+import scipy
 import random
 # from torch.utils.data import Dataset, DataLoader
 # import pandas as pd
@@ -28,9 +29,9 @@ if torch.cuda.is_available():
     # torch.set_default_dtype(torch.float)
     # torch.set_default_device(dev)
     torch.set_default_tensor_type('torch.cuda.FloatTensor')
-# if torch.backends.mps.is_available():
-#     print("MPS is available, running on MPS")
-#     dev = torch.device("mps")
+if torch.backends.mps.is_available():
+    print("MPS is available, running on MPS")
+    dev = torch.device("mps")
 else:
     print("CUDA not available, running on CPU")
 mpl.rcParams['figure.dpi'] = 350
