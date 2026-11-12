@@ -1,0 +1,9 @@
+# Versions used for the Python 3.11 notebook checks.
+torch==2.5.1
+numpy==2.2.4
+scipy==1.14.1
+matplotlib==3.10.1
+pyDOE==0.3.8
+pyevtk==1.6.0
+jupyterlab==4.3.6
+ipykernel==6.29.5

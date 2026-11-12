@@ -51,11 +51,7 @@ class ScaleFFT(torch.nn.Module):
 
 
     def _get_weights(self):
-        ws = np.zeros((1, self.n_modes))
-        for i in range(self.n_modes):
-            ws[0, i] = i + 1.
-        ws = torch.tensor(ws, dtype=torch.float32)
-        return ws
+        return torch.arange(1, self.n_modes + 1, dtype=torch.float32).unsqueeze(0)
 
     def forward(self, x):
         ws = self.ws
@@ -75,7 +71,7 @@ class MultiLayerNet_FFT1(torch.nn.Module):
         member variables.
         """
         super(MultiLayerNet_FFT1, self).__init__()
-        self.layers = layers
+        self.layers = list(layers)
         self.layers[1] = self.layers[0] * 2 * n_modes + 2 * self.layers[0]
 
         self.layer1 = ScaleFFT(n_modes, layers[0])

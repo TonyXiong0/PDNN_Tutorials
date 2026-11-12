@@ -1,0 +1,13 @@
+# Python and Jupyter
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+
+# Local editor and OS files
+.idea/
+.vscode/
+.DS_Store
+
+# Generated checkpoints and visualization files
+/output/

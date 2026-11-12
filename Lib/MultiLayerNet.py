@@ -1,7 +1,5 @@
 import torch
 
-from Lib.ImportLibrary import *
-
 
 class MultiLayerNet(torch.nn.Module):
     def __init__(self, layers, init=False):

@@ -3,7 +3,7 @@
 # Author:Zhihao.Xiong
 # @File:myFCNGrad.py
 # @Software:PyCharm
-from Lib.ImportLibrary import *
+import torch
 
 class Conv2dDerivative(torch.nn.Module):
     def __init__(self, DerFilter, resol, kernel_size=3, name=''):
@@ -20,7 +20,7 @@ class Conv2dDerivative(torch.nn.Module):
             1, padding=0, bias=False)
 
         # Fixed gradient operator
-        self.filter.weight = torch.nn.Parameter(torch.FloatTensor(DerFilter), requires_grad=False)
+        self.filter.weight = torch.nn.Parameter(torch.as_tensor(DerFilter, dtype=torch.float32), requires_grad=False)
 
     def forward(self, input):
         derivative = self.filter(input)
@@ -119,13 +119,13 @@ class Derivative(torch.nn.Module):
                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                               [1 / 840, -32 / 840, 168 / 840, -672 / 840, 0, 672 / 840, -168 / 840, 32 / 840, -1 / 840],
+                               [3 / 840, -32 / 840, 168 / 840, -672 / 840, 0, 672 / 840, -168 / 840, 32 / 840, -3 / 840],
                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
                                [0, 0, 0, 0, 0, 0, 0, 0, 0]]]]
 
-                partial_y = [[[[0, 0, 0, 0, 1 / 840, 0, 0, 0, 0],
+                partial_y = [[[[0, 0, 0, 0, 3 / 840, 0, 0, 0, 0],
                                [0, 0, 0, 0, -32 / 840, 0, 0, 0, 0],
                                [0, 0, 0, 0, 168 / 840, 0, 0, 0, 0],
                                [0, 0, 0, 0, -672 / 840, 0, 0, 0, 0],
@@ -133,7 +133,7 @@ class Derivative(torch.nn.Module):
                                [0, 0, 0, 0, 672 / 840, 0, 0, 0, 0],
                                [0, 0, 0, 0, -168 / 840, 0, 0, 0, 0],
                                [0, 0, 0, 0, 32 / 840, 0, 0, 0, 0],
-                               [0, 0, 0, 0, -1 / 840, 0, 0, 0, 0]]]]
+                               [0, 0, 0, 0, -3 / 840, 0, 0, 0, 0]]]]
 
                 lapl_op = [[[[0, 0, -1 / 12, 0, 0],
                              [0, 0, 4 / 3, 0, 0],
@@ -148,19 +148,19 @@ class Derivative(torch.nn.Module):
                 DerFilter=partial_x,
                 resol=(dx * 1),
                 kernel_size=KernelSize,
-                name='dx_operator').to(dev)
+                name='dx_operator')
 
             self.dy = Conv2dDerivative(
                 DerFilter=partial_y,
                 resol=(dy * 1),
                 kernel_size=KernelSize,
-                name='dy_operator').to(dev)
+                name='dy_operator')
 
             self.laplace = Conv2dDerivative(
                 DerFilter = lapl_op,
                 resol = (dx*dy),
-                kernel_size = 5,
-                name = 'laplace_operator').to(dev)
+                kernel_size=len(lapl_op[0][0]),
+                name='laplace_operator')
 
         if dim==3:
             if KernelSize == 3:
@@ -188,7 +188,7 @@ class Derivative(torch.nn.Module):
                 #              [0, 1, 0]]]]
 
             elif KernelSize == 5:
-                partial_z = torch.tensor([
+                partial_x = torch.tensor([
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [1 / 12, -8 / 12, 0, 8 / 12, -1 / 12], [0, 0, 0, 0, 0],
@@ -196,14 +196,14 @@ class Derivative(torch.nn.Module):
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]]).float()
 
-                partial_x = torch.tensor([
+                partial_y = torch.tensor([
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
                     [[0, 0, 1 / 12, 0, 0], [0, 0, -8 / 12, 0, 0], [0, 0, 0, 0, 0], [0, 0, 8 / 12, 0, 0],[0, 0, -1 / 12, 0, 0]],
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]]).float()
 
-                partial_y = torch.tensor([
+                partial_z = torch.tensor([
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 1 / 12, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, -8 / 12, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
                     [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0],[0, 0, 0, 0, 0]],
@@ -227,16 +227,16 @@ class Derivative(torch.nn.Module):
                 DerFilter=partial_x,
                 resol=(dx * 1),
                 kernel_size=KernelSize,
-                name='dx_operator').to(dev)
+                name='dx_operator')
 
             self.dy = Conv3dDerivative(
                 DerFilter=partial_y,
                 resol=(dy * 1),
                 kernel_size=KernelSize,
-                name='dy_operator').to(dev)
+                name='dy_operator')
 
             self.dz = Conv3dDerivative(
                 DerFilter=partial_z,
                 resol=(dz * 1),
                 kernel_size=KernelSize,
-                name='dz_operator').to(dev)
+                name='dz_operator')

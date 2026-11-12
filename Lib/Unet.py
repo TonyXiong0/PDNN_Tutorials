@@ -3,7 +3,7 @@
 # Author:Zhihao.Xiong
 # @File:Unet.py
 # @Software:PyCharm
-from Lib.ImportLibrary import *
+import torch
 
 #  ------------------ U-Net ------------------
 class _EncoderBlock(torch.nn.Module):
